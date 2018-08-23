@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Senate</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-sm bg-warning">
+        <div>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item"><a class="nav-link" href="home.html">Home</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#"  data-toggle="dropdown">Congress 113</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="senate-data.html">Senate</a>
+                        <a class="dropdown-item" href="house-data.html">House</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Attendance</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="senate-attendance.html">Senate</a>
+                        <a class="dropdown-item" href="house-attendance.html">House</a>
+                    </div>
+                </li>  
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Party Loyalty</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="senate-loyalty.html">Senate</a>
+                        <a class="dropdown-item" href="house-loyalty.html">House</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <section>
+        <div class="container-fluid">
+            <form>
+                <div class="form-row">
+                    <div class="form-group col-sm-12 col-md-6">
+                        <span>Filter by Party:</span>    
+                        <div class="form-check ml-4">
+                            <input class="form-check-input" type="checkbox" name="checkboxes" value="R" onchange="filterMembers()" id="chckR"> 
+                            <label class="form-check-label px-2" for="chckR">Republican</label>
+                        </div>
+                        <div class="form-check ml-4">
+                            <input class="form-check-input" type="checkbox" name="checkboxes" value="D" onchange="filterMembers()" id="chckD"> 
+                            <label class="form-check-label px-2" for="chckD">Democrat</label>
+                        </div>
+                        <div class="form-check ml-4">
+                            <input class="form-check-input" type="checkbox" name="checkboxes" value="I" onchange="filterMembers()" id="chckI"> 
+                            <label class="form-check-label px-2" for="chckI">Independent</label>
+                        </div>      
+                    </div>
+                    <div class="form-group col-sm-12 col-md-6">
+                            <label for="stateSelect">Filter by State:</label>
+                            <select multiple class="form-control" onchange="filterMembers()" id="stateSelect">
+                                <option value="all" selected>Show all states</option>
+                                <option value="AL">AL</option>
+                                <option value="AK">AK</option>
+                                <option value="AZ">AZ</option>
+                                <option value="AR">AR</option>
+                                <option value="CA">CA</option>
+                                <option value="CO">CO</option>
+                                <option value="CT">CT</option>
+                                <option value="DE">DE</option>
+                                <option value="FL">FL</option>
+                                <option value="GA">GA</option>
+                                <option value="HI">HI</option>
+                                <option value="ID">ID</option>
+                                <option value="IL">IL</option>
+                                <option value="IN">IN</option>
+                                <option value="IA">IA</option>
+                                <option value="KS">KS</option>
+                                <option value="KY">KY</option>
+                                <option value="LA">LA</option>
+                                <option value="ME">ME</option>
+                                <option value="MD">MD</option>
+                                <option value="MA">MA</option>
+                                <option value="MI">MI</option>
+                                <option value="MN">MN</option>
+                                <option value="MS">MS</option>
+                                <option value="MO">MO</option>
+                                <option value="MT">MT</option>
+                                <option value="NE">NE</option>
+                                <option value="NV">NV</option>
+                                <option value="NJ">NJ</option>
+                                <option value="NH">NH</option>
+                                <option value="NM">NM</option>
+                                <option value="NY">NY</option>
+                                <option value="NC">NC</option>
+                                <option value="ND">ND</option>
+                                <option value="OK">OK</option>
+                                <option value="OH">OH</option>
+                                <option value="OR">OR</option>
+                                <option value="PA">PA</option>
+                                <option value="RI">RI</option>
+                                <option value="SC">SC</option>
+                                <option value="SD">SD</option>
+                                <option value="TN">TN</option>
+                                <option value="TX">TX</option>
+                                <option value="UT">UT</option>
+                                <option value="VT">VT</option>
+                                <option value="VA">VA</option>
+                                <option value="WA">WA</option>
+                                <option value="WV">WV</option>
+                                <option value="WI">WI</option>
+                                <option value="WY">WY</option>
+                            </select>
+                    </div>
+                </div>
+            </form>
+
+            <div class="table-responsive">
+                <table id="senate-data" class="table table-sm table-bordered table-hover mb-4"></table>
+            </div>
+
+        </div>
+    </section>
+
+    <script src="scripts/pro-congress-113-house.js"></script>
+    <script src="scripts/data-pages.js"></script>
+
+</body>
