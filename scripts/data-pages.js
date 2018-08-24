@@ -2,8 +2,8 @@
 //when page is loaded than call function buildTable
 onload = (function(){ 
     // console.log("Page fully loaded!");
-    const tbl = document.getElementById("senate-data");
-    let allMembers = data.results[0].members;
+    const tbl = document.getElementById("table-data");
+    const allMembers = data.results[0].members;
 
     buildTableHeader(tbl)
     buildTableRest(tbl, allMembers);
@@ -14,14 +14,15 @@ function buildTableHeader(myTable){
     const newTHead = document.createElement("thead");
     const newRow = document.createElement("tr");
 
-    tableHeaderCellsArray.forEach((oneTH) => {
+    tableHeaderCellsArray.forEach(oneTH => {
         const newCell = document.createElement("th");
         newCell.innerHTML = oneTH;
         newRow.append(newCell);
     });
 
     newTHead.append(newRow);
-    newTHead.classList.add('bg-warning');
+    newTHead.classList.add('bg-warning', 'text-center');
+    newRow.firstChild.classList.add('text-left');
     myTable.append(newTHead);
 }
 
@@ -29,7 +30,7 @@ function buildTableHeader(myTable){
 function buildTableRest(myTable, myMembers){
     const newTBody = document.createElement("tbody");
 
-    myMembers.forEach((oneMember) => {
+    myMembers.forEach(oneMember => {
         const newRow = buildNewRow(oneMember);
         newTBody.append(newRow);
     });
@@ -49,18 +50,20 @@ function buildNewRow(currentMember) {
 
     //add new row
     const newRow = document.createElement("tr");
+    newRow.classList.add('text-center');
 
     //add new cells to this new row
-    fieldsContentArray.forEach((oneTD) => {
+    fieldsContentArray.forEach(oneTD => {
         const newCell = document.createElement("td");
         newCell.innerHTML = oneTD;
         newRow.append(newCell);
     });
+    newRow.firstChild.classList.add('text-left');
     return newRow;
 }
 
 function filterMembers(){
-    const tbl = document.getElementById("senate-data");
+    const tbl = document.getElementById("table-data");
     const allMembers = data.results[0].members;
     let selectedMembers = [];
 
