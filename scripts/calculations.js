@@ -13,6 +13,7 @@ var statistics = {
 onload = (function(){ 
 
     const allMembers = data.results[0].members;
+    console.log(allMembers);
     console.log(allMembers[0]);
 
     const treeArrayObject = countPartyMembers(allMembers);
@@ -20,19 +21,21 @@ onload = (function(){
     statistics.votesWPartRep = parseFloat(votesWithParty(treeArrayObject.repArr));
     statistics.votesWPartInd = parseFloat(votesWithParty(treeArrayObject.indArr));
 
-    statistics.leastLoyal = loyalty(allMembers, 'least');
-    const leastLoyalTable = document.querySelector('#leastLoyal');
-    buildTableRest(leastLoyalTable, statistics.leastLoyal);
-
-    statistics.mostLoyal = loyalty(allMembers, 'most');
-    const mostLoyalTable = document.querySelector('#mostLoyal');
-    buildTableRest(mostLoyalTable, statistics.mostLoyal);
-
-    console.log(statistics);
-
     const countPartyTableHeader = ['Part', 'No. of Reps', '% Voted w/ Party'];
     const loyaltyTableHeader = ['Name', 'No. Party Votes', '%Party Votes'];
     const attendanceTableHeader = ['Name', 'No. Missed Votes', '%Missed'];
+
+    statistics.leastLoyal = loyalty(allMembers, 'least');
+    const leastLoyalTable = document.querySelector('#leastLoyal');
+    buildTableHeader(loyaltyTableHeader, leastLoyalTable);
+    biuldSmallTableRest(leastLoyalTable, statistics.leastLoyal);
+
+    statistics.mostLoyal = loyalty(allMembers, 'most');
+    const mostLoyalTable = document.querySelector('#mostLoyal');
+    buildTableHeader(loyaltyTableHeader, mostLoyalTable);
+    biuldSmallTableRest(mostLoyalTable, statistics.mostLoyal);
+
+    console.log(statistics);
 });
 
 function countPartyMembers(myArray){
@@ -82,4 +85,13 @@ function loyalty(myArray, direction){
         return myArray.filter(member => tenPercentValuesArray.includes(member.votes_with_party_pct))
                                                              .sort((a, b) => b.votes_with_party_pct - a.votes_with_party_pct);
     }    
+}
+
+function biuldSmallTableRest(){
+
+    let fieldsContentArray = [nameFieldContent, 
+                             Math.round((currentMember.total_votes * currentMember.votes_with_party_pct)/100), 
+                             currentMember.votes_with_party_pct];
+
+
 }

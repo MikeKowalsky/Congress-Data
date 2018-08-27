@@ -2,28 +2,36 @@
 //when page is loaded than call function buildTable
 onload = (function(){ 
     // console.log("Page fully loaded!");
+    
     const tbl = document.getElementById("table-data");
-    const allMembers = data.results[0].members;
-
-    buildTableHeader(tbl)
-    buildTableRest(tbl, allMembers);
+    if(tbl != null){    //if html contains this table, if not I need only functions
+        const allMembers = data.results[0].members;
+        console.log(allMembers);
+    
+        const selectElement = document.getElementById("stateSelect");
+        createOptionElements(allMembers, selectElement);
+    
+        const tableHeaderCellsArray = ["Name", "Party", "State", "Seniority", "% Votes w/ Party"];
+        buildTableHeader(tableHeaderCellsArray, tbl)
+        buildTableRest(tbl, allMembers, "main");
+    }
 });
 
-function buildTableHeader(myTable){
-    const tableHeaderCellsArray = ["Name", "Party", "State", "Seniority", "% Votes w/ Party"];
-    const newTHead = document.createElement("thead");
-    const newRow = document.createElement("tr");
+function buildTableHeader(headerCellsArray, htmlElement){
 
-    tableHeaderCellsArray.forEach(oneTH => {
-        const newCell = document.createElement("th");
-        newCell.innerHTML = oneTH;
-        newRow.append(newCell);
+    const newTHead = document.createElement('thead');
+    const newRow = document.createElement('tr');
+
+    headerCellsArray.forEach(headerCell => {
+        let newTH = document.createElement('th');
+        newTH.innerHTML = headerCell;
+        newRow.append(newTH);
     });
-
+    
+    newRow.firstChild.classList.add('text-left');
     newTHead.append(newRow);
     newTHead.classList.add('bg-warning', 'text-center');
-    newRow.firstChild.classList.add('text-left');
-    myTable.append(newTHead);
+    htmlElement.append(newTHead);
 }
 
 //biuld rest of the table
@@ -41,12 +49,10 @@ function buildTableRest(myTable, myMembers){
 //biuld one row
 function buildNewRow(currentMember) {
 
+    const nameFieldContent = createNameCellContent(currentMember);
+    
     //array with content for certain fields for current member
-    const fieldsContentArray = ["<a href=\"" + currentMember.url + "\">" + currentMember.last_name + " " + ((currentMember.middle_name == null) ? " " : (currentMember.middle_name + " ")) + currentMember.first_name + "</a>", 
-                              currentMember.party, 
-                              currentMember.state, 
-                              currentMember.seniority, 
-                              currentMember.votes_with_party_pct];
+    let fieldsContentArray = [nameFieldContent, currentMember.party, currentMember.state, currentMember.seniority, currentMember.votes_with_party_pct];
 
     //add new row
     const newRow = document.createElement("tr");
@@ -80,10 +86,8 @@ function filterMembers(){
 
     if((checkBoxesValuesArray.length === 0 || checkBoxesValuesArray.length === 3) 
         && (selectedStateArray.length ===  0 || selectedStateArray.includes('all'))){
-        //if no party or all parties is selected and no state or "all" stetes are selected
         selectedMembers = allMembers;
     } else {
-        //some parties and some states
         allMembers.forEach((oneMember) => {
             if ((checkBoxesValuesArray.includes(oneMember.party) || checkBoxesValuesArray.length === 0) 
                     && (selectedStateArray.includes(oneMember.state) || selectedStateArray.length ===  0 || selectedStateArray.includes('all'))){
@@ -100,4 +104,24 @@ function filterMembers(){
 //remove old tbody
 function rmvTBody(myTable) {
     myTable.removeChild(myTable.childNodes[1]);
+}
+
+function createNameCellContent(currentMember){
+    return (currentMember.last_name + " " + ((currentMember.middle_name == null) ? " " : (currentMember.middle_name + " ")) + currentMember.first_name)
+            .link(currentMember.url);
+}
+
+function createOptionElements(allMembers, mySelect) {
+    let allStates = [];
+    allMembers.forEach(member => {
+        if(!allStates.includes(member.state)){
+            allStates.push(member.state);
+        }
+    });
+
+    allStates.sort().forEach(state => {
+        const newOption = document.createElement('option');
+        newOption.innerHTML = state;
+        mySelect.append(newOption);
+    });
 }
