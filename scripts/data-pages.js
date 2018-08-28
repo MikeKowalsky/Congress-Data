@@ -4,16 +4,16 @@ onload = (function(){
     // console.log("Page fully loaded!");
     
     const tbl = document.getElementById("table-data");
+    console.log(tbl);
     if(tbl != null){    //if html contains this table, if not I need only functions
         const allMembers = data.results[0].members;
-        console.log(allMembers);
     
         const selectElement = document.getElementById("stateSelect");
         createOptionElements(allMembers, selectElement);
     
         const tableHeaderCellsArray = ["Name", "Party", "State", "Seniority", "% Votes w/ Party"];
         buildTableHeader(tableHeaderCellsArray, tbl)
-        buildTableRest(tbl, allMembers, "main");
+        buildTableRest(tbl, allMembers);
     }
 });
 
@@ -42,7 +42,6 @@ function buildTableRest(myTable, myMembers){
         const newRow = buildNewRow(oneMember);
         newTBody.append(newRow);
     });
-
     myTable.append(newTBody);
 }
 
@@ -71,7 +70,7 @@ function buildNewRow(currentMember) {
 function filterMembers(){
     const tbl = document.getElementById("table-data");
     const allMembers = data.results[0].members;
-    let selectedMembers = [];
+    const selectedMembers = [];
 
     //check which checboxes are checked and put values into array
     const checkBoxesValuesArray = Array.from(document.querySelectorAll('input[name=checkboxes]:checked'))
@@ -97,7 +96,6 @@ function filterMembers(){
     }
 
     rmvTBody(tbl);
-    console.log('Number of rows: ' + selectedMembers.length)
     buildTableRest(tbl, selectedMembers);
 }
 
@@ -112,7 +110,7 @@ function createNameCellContent(currentMember){
 }
 
 function createOptionElements(allMembers, mySelect) {
-    let allStates = [];
+    const allStates = [];
     allMembers.forEach(member => {
         if(!allStates.includes(member.state)){
             allStates.push(member.state);
