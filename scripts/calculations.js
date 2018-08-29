@@ -14,7 +14,7 @@ var statistics = {
         "mostEngaged" : []
 };
 
-onload = (function(){
+function statisticsPages(){
     const allMembers = data.results[0].members;
 
     const treeArrayObject = countPartyMembers(allMembers);
@@ -60,8 +60,8 @@ onload = (function(){
         biuldSmallTableRest(mostLoyalTable, statistics.mostLoyal, 'loyalty');
     }
 
-    console.log(statistics);
-});
+    // console.log(statistics);
+}
 
 function countPartyMembers(myArray){
     const demArray = [];

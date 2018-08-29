@@ -1,22 +1,64 @@
+var data;
 
 //when page is loaded than call function buildTable
 onload = (function(){ 
     // console.log("Page fully loaded!");
+
+    // baguetteBox.run('.baguetteBox');
+    // $('.colorBox').colorbox({iframe:true, innerWidth:425, innerHeight:344});
+    // $('.colorBox').colorbox();
     
-    const tbl = document.getElementById("table-data");
-    console.log(tbl);
-    if(tbl != null){    //if html contains this table, if not I need only functions
-        const allMembers = data.results[0].members;
     
-        const selectElement = document.getElementById("stateSelect");
-        createOptionElements(allMembers, selectElement);
-    
-        const tableHeaderCellsArray = ["Name", "Party", "State", "Seniority", "% Votes w/ Party"];
-        buildTableHeader(tableHeaderCellsArray, tbl)
-        buildTableRest(tbl, allMembers);
+    let url = '';
+    if(document.title == 'Senate' || document.title == 'Senate-Attendance' || document.title == 'Senate-Loyalty'){
+        url = 'https://api.myjson.com/bins/10be9l';
+        //url = 'https://api.propublica.org/congress/v1/113/senate/members.json'
+    } else if (document.title == 'House' || document.title == 'House-Attendance' || document.title == 'House-Loyalty'){
+        url = 'https://api.myjson.com/bins/1fzbyp';
+        // url = 'https://api.propublica.org/congress/v1/113/house/members.json'
     }
+
+    fetch(url)
+    // fetch(url, {
+    // 	headers: new Headers({
+    //     'X-API-Key': 'usOMuQb7H1gDEgsMArhgUa5Pefz1BxSbxrdMK4LJ'
+    //     })
+    // })
+    .then (response => response.json())
+    .then ((jsonData) => {
+        data = jsonData;            
+        if(document.title == 'Senate' || document.title == 'House'){
+            dataPages();
+        } else {
+            statisticsPages();
+        }
+    });
 });
 
+//main function
+function dataPages(){
+
+    const tbl = document.getElementById("table-data");
+    const allMembers = data.results[0].members;
+    // console.log(allMembers[0]);
+
+    const selectElement = document.getElementById("stateSelect");
+    createOptionElements(allMembers, selectElement);
+
+    const tableHeaderCellsArray = ["Name", "Party", "State", "Seniority", "% Votes w/ Party"];
+    buildTableHeader(tableHeaderCellsArray, tbl)
+    buildTableRest(tbl, allMembers);
+
+    // $(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
+
+    // tbl.DataTable({
+    //     "order": [[ 3, "desc" ]]
+    // });
+}
+
+
+//building table
+//
 function buildTableHeader(headerCellsArray, htmlElement){
 
     const newTHead = document.createElement('thead');
@@ -64,9 +106,13 @@ function buildNewRow(currentMember) {
         newRow.append(newCell);
     });
     newRow.firstChild.classList.add('text-left');
+    // newRow.firstChild.firstChild.classList.add('colorBox');
+    // newRow.firstChild.firstChild.classList.add('iframe', 'cboxElement');
     return newRow;
 }
 
+// filter function
+//
 function filterMembers(){
     const tbl = document.getElementById("table-data");
     const allMembers = data.results[0].members;
@@ -99,14 +145,16 @@ function filterMembers(){
     buildTableRest(tbl, selectedMembers);
 }
 
+//other small functions
 //remove old tbody
 function rmvTBody(myTable) {
     myTable.removeChild(myTable.childNodes[1]);
 }
 
 function createNameCellContent(currentMember){
-    return (currentMember.last_name + " " + ((currentMember.middle_name == null) ? " " : (currentMember.middle_name + " ")) + currentMember.first_name)
-            .link(currentMember.url);
+    return (currentMember.last_name + " " + 
+            ((currentMember.middle_name == null) ? " " : (currentMember.middle_name + " ")) + 
+            currentMember.first_name).link(currentMember.url);
 }
 
 function createOptionElements(allMembers, mySelect) {

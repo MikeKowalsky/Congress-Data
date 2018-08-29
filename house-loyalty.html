@@ -6,19 +6,25 @@
     <title>House-Loyalty</title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles/style.css">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
 
 
     <header>
+        <div class="container d-flex align-items-center justify-content-between">
+            <img class="my-logo" src="assets/tgif_logo.jpg" alt="company's logo">
+            <h2 class="text-right font-weight-bold">Transparent Government in Fact</h2>
+        </div>
         <nav class="navbar navbar-expand-sm navbar-dark bg-warning">
             <div class="container">
 
-                <div class="navbar-brand font-weight-bold">Congress</div>
+                <div class="navbar-brand font-weight-bold my-brand-text">TGiF</div>
                 
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -51,15 +57,20 @@
         </nav>
     </header>
 
-    <section class="container my-4">
+    <section class="container my-4 my-separator">
         <div class="row">
             <div class="col-sm-12 col-md-6">
                 <h4>Party Loyalty</h4>
                 <p class="text-justify">Those who consider themselves to be strong partisans, strong Democrats and strong Republicans respectively, tend to be the most faithful in voting for their party's nominee for office and legislation that backs their party's agenda. </p>
             </div>
-            <div class="col-sm-12 col-md-6">
-                <h5>Senate at a glance</h5>
-                <table id="glance" class="table table-sm table-bordered table-hover mb-4"></table>
+            <div class="col-sm-12 col-md-6 d-flex align-items-center">
+                <div class="mx-auto">
+                    <div class="d-flex mb-1">
+                        <i class="material-icons pr-2">group</i>
+                        <h5>Senate at a glance</h5>
+                    </div>
+                    <table id="glance" class="table table-sm table-bordered table-hover mb-4"></table>
+                </div>
             </div>
         </div>
     </section>
@@ -67,11 +78,17 @@
     <section class="container my-4">
         <div class="row">
             <div class="col-sm-12 col-md-6">
-                <h5>Least loyal</h5>   
+                <div class="d-flex mb-1">
+                    <i class="material-icons pr-2">thumb_down</i>
+                    <h5>Least loyal</h5>
+                </div>
                 <table id="leastLoyal" class="table table-sm table-bordered table-hover mb-4"></table>
             </div>
             <div class="col-sm-12 col-md-6">
-                <h5>Most loyal</h5>
+                <div class="d-flex mb-1">
+                    <i class="material-icons pr-2">thumb_up</i>
+                    <h5>Most loyal</h5>
+                </div>
                 <table id="mostLoyal" class="table table-sm table-bordered table-hover mb-4"></table>        
             </div>
         </div>
@@ -79,11 +96,29 @@
 
     <footer class="bg-warning">
         <div class="container">
-            <div class="text-center py-3">MK2018</div>
+            <div class="row">
+                <div class="col-sm-12 col-md-4">
+                    <div class="py-3 d-flex justify-content-center align-items-center">
+                        <i class="material-icons pr-2">place</i>
+                        <span>900 Florida Ave NE, Washington</span>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-4">
+                    <div class="py-3 d-flex justify-content-center align-items-center">
+                        <i class="material-icons pr-2">copyright</i>
+                        <span>2018 TGiF | All Rights Reserved</span>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-4">
+                    <div class="py-3 d-flex justify-content-center align-items-center">
+                        <i class="material-icons pr-2">local_post_office</i>
+                        <a class="my-email" href="mailto:emailUs@please.com">emailUs@please.com</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </footer>
 
-    <script src="scripts/pro-congress-113-house.js"></script>
     <script src="scripts/data-pages.js"></script>
     <script src="scripts/calculations.js"></script>
 
