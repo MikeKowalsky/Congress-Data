@@ -1,22 +1,13 @@
 var data;
 
-//when page is loaded than call function buildTable
-onload = (function(){ 
-    // console.log("Page fully loaded!");
-
-    // baguetteBox.run('.baguetteBox');
-    // $('.colorBox').colorbox({iframe:true, innerWidth:425, innerHeight:344});
-    // $('.colorBox').colorbox();
-    
+//when page is loaded than call for  date
+onload = (function(){
     
     let url = '';
-    if(document.title == 'Senate' || document.title == 'Senate-Attendance' || document.title == 'Senate-Loyalty'){
-        url = 'https://api.myjson.com/bins/10be9l';
-        //url = 'https://api.propublica.org/congress/v1/113/senate/members.json'
-    } else if (document.title == 'House' || document.title == 'House-Attendance' || document.title == 'House-Loyalty'){
-        url = 'https://api.myjson.com/bins/1fzbyp';
-        // url = 'https://api.propublica.org/congress/v1/113/house/members.json'
-    }
+    (document.title.includes('Senate')) ? url = 'https://api.myjson.com/bins/10be9l' : url = 'https://api.myjson.com/bins/1fzbyp';
+    // (document.title.includes('Senate')) ? 
+    //     url = 'https://api.propublica.org/congress/v1/113/senate/members.json' : 
+    //     url = 'https://api.propublica.org/congress/v1/113/house/members.json';
 
     fetch(url)
     // fetch(url, {
@@ -27,11 +18,7 @@ onload = (function(){
     .then (response => response.json())
     .then ((jsonData) => {
         data = jsonData;            
-        if(document.title == 'Senate' || document.title == 'House'){
-            dataPages();
-        } else {
-            statisticsPages();
-        }
+        (document.title == 'Senate' || document.title == 'House') ? dataPages() : statisticsPages();
     });
 });
 
@@ -49,13 +36,10 @@ function dataPages(){
     buildTableHeader(tableHeaderCellsArray, tbl)
     buildTableRest(tbl, allMembers);
 
-    // $(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
-
     // tbl.DataTable({
     //     "order": [[ 3, "desc" ]]
     // });
 }
-
 
 //building table
 //
@@ -106,8 +90,7 @@ function buildNewRow(currentMember) {
         newRow.append(newCell);
     });
     newRow.firstChild.classList.add('text-left');
-    // newRow.firstChild.firstChild.classList.add('colorBox');
-    // newRow.firstChild.firstChild.classList.add('iframe', 'cboxElement');
+    newRow.firstChild.firstChild.setAttribute('target', '_blank');
     return newRow;
 }
 
@@ -116,29 +99,23 @@ function buildNewRow(currentMember) {
 function filterMembers(){
     const tbl = document.getElementById("table-data");
     const allMembers = data.results[0].members;
-    const selectedMembers = [];
+    let selectedMembers = [];
 
     //check which checboxes are checked and put values into array
     const checkBoxesValuesArray = Array.from(document.querySelectorAll('input[name=checkboxes]:checked'))
                                        .map(checkedCheckbox => checkedCheckbox.value);
-    // console.log(checkBoxesValuesArray);
 
     //check which states are selected and put values into array
     const selectedStateArray = Array.from(document.querySelectorAll('option'))
                                     .filter(stateOption => stateOption.selected === true)
                                     .map(selectedStateOption => selectedStateOption.value);
-    // console.log(selectedStateArray);
 
     if((checkBoxesValuesArray.length === 0 || checkBoxesValuesArray.length === 3) 
         && (selectedStateArray.length ===  0 || selectedStateArray.includes('all'))){
         selectedMembers = allMembers;
     } else {
-        allMembers.forEach((oneMember) => {
-            if ((checkBoxesValuesArray.includes(oneMember.party) || checkBoxesValuesArray.length === 0) 
-                    && (selectedStateArray.includes(oneMember.state) || selectedStateArray.length ===  0 || selectedStateArray.includes('all'))){
-                selectedMembers.push(oneMember);
-            }
-        });
+        selectedMembers = allMembers.filter(oneMember => (checkBoxesValuesArray.includes(oneMember.party) || checkBoxesValuesArray.length === 0) 
+                    && (selectedStateArray.includes(oneMember.state) || selectedStateArray.length ===  0 || selectedStateArray.includes('all')));
     }
 
     rmvTBody(tbl);
@@ -158,7 +135,8 @@ function createNameCellContent(currentMember){
 }
 
 function createOptionElements(allMembers, mySelect) {
-    const allStates = [];
+    const allStates = []; 
+    
     allMembers.forEach(member => {
         if(!allStates.includes(member.state)){
             allStates.push(member.state);

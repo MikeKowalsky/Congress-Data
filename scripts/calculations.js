@@ -14,7 +14,7 @@ var statistics = {
         "mostEngaged" : []
 };
 
-function statisticsPages(){
+function statisticsPages(data){
     const allMembers = data.results[0].members;
 
     const treeArrayObject = countPartyMembers(allMembers);
