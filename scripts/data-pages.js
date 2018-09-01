@@ -1,4 +1,3 @@
-var data;
 
 //when page is loaded than call for  date
 onload = (function(){
@@ -17,35 +16,41 @@ onload = (function(){
     // })
     .then (response => response.json())
     .then ((jsonData) => {
-        data = jsonData;            
-        (document.title == 'Senate' || document.title == 'House') ? dataPages() : statisticsPages();
+        data = jsonData.results[0].members;            
+        (document.title == 'Senate' || document.title == 'House') ? dataPages(data) : statisticsPages(data);
     });
 });
 
 //main function
-function dataPages(){
+function dataPages(allMembers){
 
-    const tbl = document.getElementById("table-data");
-    const allMembers = data.results[0].members;
-    // console.log(allMembers[0]);
-
+    const tblBody = document.getElementById("dataTBody");
+    const tblHead = document.getElementById("dataTHead");
     const selectElement = document.getElementById("stateSelect");
+    
     createOptionElements(allMembers, selectElement);
+    activateEventList(selectElement, tblBody, allMembers);
 
     const tableHeaderCellsArray = ["Name", "Party", "State", "Seniority", "% Votes w/ Party"];
-    buildTableHeader(tableHeaderCellsArray, tbl)
-    buildTableRest(tbl, allMembers);
+    buildTableHeader(tblHead, tableHeaderCellsArray);
+    buildTableRest(tblBody, filterMembers(allMembers));
 
     // tbl.DataTable({
     //     "order": [[ 3, "desc" ]]
     // });
 }
 
+//activate eventlisteners
+function activateEventList(selectElement, tblBody, allMembers){
+    document.querySelector('#chckR').addEventListener('click', () => buildTableRest(tblBody, filterMembers(allMembers)));
+    document.querySelector('#chckD').addEventListener('click', () => buildTableRest(tblBody, filterMembers(allMembers)));
+    document.querySelector('#chckI').addEventListener('click', () => buildTableRest(tblBody, filterMembers(allMembers)));
+    selectElement.addEventListener('change', () => buildTableRest(tblBody, filterMembers(allMembers)));
+}
+
 //building table
 //
-function buildTableHeader(headerCellsArray, htmlElement){
-
-    const newTHead = document.createElement('thead');
+function buildTableHeader(htmlElement, headerCellsArray){    
     const newRow = document.createElement('tr');
 
     headerCellsArray.forEach(headerCell => {
@@ -55,20 +60,17 @@ function buildTableHeader(headerCellsArray, htmlElement){
     });
     
     newRow.firstChild.classList.add('text-left');
-    newTHead.append(newRow);
-    newTHead.classList.add('bg-warning', 'text-center');
-    htmlElement.append(newTHead);
+    htmlElement.append(newRow);
 }
 
 //biuld rest of the table
-function buildTableRest(myTable, myMembers){
-    const newTBody = document.createElement("tbody");
+function buildTableRest(myHtmlEl, filtredMembers){
+    myHtmlEl.innerHTML = '';
 
-    myMembers.forEach(oneMember => {
+    filtredMembers.forEach(oneMember => {
         const newRow = buildNewRow(oneMember);
-        newTBody.append(newRow);
+        myHtmlEl.append(newRow);
     });
-    myTable.append(newTBody);
 }
 
 //biuld one row
@@ -94,40 +96,24 @@ function buildNewRow(currentMember) {
     return newRow;
 }
 
-// filter function
-//
-function filterMembers(){
-    const tbl = document.getElementById("table-data");
-    const allMembers = data.results[0].members;
-    let selectedMembers = [];
-
+function filterMembers(members){
     //check which checboxes are checked and put values into array
     const checkBoxesValuesArray = Array.from(document.querySelectorAll('input[name=checkboxes]:checked'))
-                                       .map(checkedCheckbox => checkedCheckbox.value);
+                                        .map(checkedCheckbox => checkedCheckbox.value);
 
     //check which states are selected and put values into array
     const selectedStateArray = Array.from(document.querySelectorAll('option'))
                                     .filter(stateOption => stateOption.selected === true)
                                     .map(selectedStateOption => selectedStateOption.value);
-
-    if((checkBoxesValuesArray.length === 0 || checkBoxesValuesArray.length === 3) 
-        && (selectedStateArray.length ===  0 || selectedStateArray.includes('all'))){
-        selectedMembers = allMembers;
-    } else {
-        selectedMembers = allMembers.filter(oneMember => (checkBoxesValuesArray.includes(oneMember.party) || checkBoxesValuesArray.length === 0) 
-                    && (selectedStateArray.includes(oneMember.state) || selectedStateArray.length ===  0 || selectedStateArray.includes('all')));
-    }
-
-    rmvTBody(tbl);
-    buildTableRest(tbl, selectedMembers);
+    
+    return members.filter(oneMember => {
+        const partyFilterValue = checkBoxesValuesArray.length === 0 || checkBoxesValuesArray.includes(oneMember.party);
+        const stateFilterValue = selectedStateArray.length ===  0 || selectedStateArray.includes('all') || selectedStateArray.includes(oneMember.state);
+        return partyFilterValue && stateFilterValue;
+    });   
 }
 
 //other small functions
-//remove old tbody
-function rmvTBody(myTable) {
-    myTable.removeChild(myTable.childNodes[1]);
-}
-
 function createNameCellContent(currentMember){
     return (currentMember.last_name + " " + 
             ((currentMember.middle_name == null) ? " " : (currentMember.middle_name + " ")) + 

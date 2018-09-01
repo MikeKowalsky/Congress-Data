@@ -30,7 +30,7 @@ function statisticsPages(data){
     //glance
     const glanceTable = document.querySelector('#glance');
     const glanceArray = ['Democrats', 'Republicans', 'Independents', 'Total'];
-    buildTableHeader(glanceTableHeader, glanceTable);
+    buildSmallTableHeader(glanceTableHeader, glanceTable);
     biuldSmallTableRest(glanceTable, glanceArray, 'glance');
     document.querySelector('#glance tbody').lastChild.classList.add('font-weight-bold')
 
@@ -39,11 +39,11 @@ function statisticsPages(data){
     const leastEngagedTable = document.querySelector('#leastEngaged');
     if (leastEngagedTable != null){
         statistics.leastEngaged = attendance(allMembers, 'lowest');
-        buildTableHeader(attendanceTableHeader, leastEngagedTable);
+        buildSmallTableHeader(attendanceTableHeader, leastEngagedTable);
         biuldSmallTableRest(leastEngagedTable, statistics.leastEngaged, 'att');
     
         statistics.mostEngaged = attendance(allMembers, 'highest');
-        buildTableHeader(attendanceTableHeader, mostEngagedTable);
+        buildSmallTableHeader(attendanceTableHeader, mostEngagedTable);
         biuldSmallTableRest(mostEngagedTable, statistics.mostEngaged, 'att');
     }
 
@@ -52,11 +52,11 @@ function statisticsPages(data){
     const mostLoyalTable = document.querySelector('#mostLoyal');
     if(leastLoyalTable != null){
         statistics.leastLoyal = loyalty(allMembers, 'least');
-        buildTableHeader(loyaltyTableHeader, leastLoyalTable);
+        buildSmallTableHeader(loyaltyTableHeader, leastLoyalTable);
         biuldSmallTableRest(leastLoyalTable, statistics.leastLoyal, 'loyalty');
     
         statistics.mostLoyal = loyalty(allMembers, 'most');
-        buildTableHeader(loyaltyTableHeader, mostLoyalTable);
+        buildSmallTableHeader(loyaltyTableHeader, mostLoyalTable);
         biuldSmallTableRest(mostLoyalTable, statistics.mostLoyal, 'loyalty');
     }
 
@@ -115,6 +115,20 @@ function attendance(myArray, direction){
 
 function countPartyVotes(currentMember){
     return Math.round((currentMember.total_votes * currentMember.votes_with_party_pct)/100);
+}
+
+//build header
+function buildSmallTableHeader(htmlElement, headerCellsArray){    
+    const newRow = document.createElement('tr');
+
+    headerCellsArray.forEach(headerCell => {
+        let newTH = document.createElement('th');
+        newTH.innerHTML = headerCell;
+        newRow.append(newTH);
+    });
+    
+    newRow.firstChild.classList.add('text-left');
+    htmlElement.append(newRow);
 }
 
 //biuld rest of the table
