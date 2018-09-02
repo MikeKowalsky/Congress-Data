@@ -14,9 +14,7 @@ var statistics = {
         "mostEngaged" : []
 };
 
-function statisticsPages(data){
-    const allMembers = data.results[0].members;
-
+function statisticsPages(allMembers){
     const treeArrayObject = countPartyMembers(allMembers);
     statistics.votesWPartDem = parseFloat(countAvgVotesWithParty(treeArrayObject.demArr));
     statistics.votesWPartRep = parseFloat(countAvgVotesWithParty(treeArrayObject.repArr));
@@ -30,7 +28,7 @@ function statisticsPages(data){
     //glance
     const glanceTable = document.querySelector('#glance');
     const glanceArray = ['Democrats', 'Republicans', 'Independents', 'Total'];
-    buildSmallTableHeader(glanceTableHeader, glanceTable);
+    buildSmallTableHeader(glanceTable, glanceTableHeader);
     biuldSmallTableRest(glanceTable, glanceArray, 'glance');
     document.querySelector('#glance tbody').lastChild.classList.add('font-weight-bold')
 
@@ -39,11 +37,11 @@ function statisticsPages(data){
     const leastEngagedTable = document.querySelector('#leastEngaged');
     if (leastEngagedTable != null){
         statistics.leastEngaged = attendance(allMembers, 'lowest');
-        buildSmallTableHeader(attendanceTableHeader, leastEngagedTable);
+        buildSmallTableHeader(leastEngagedTable, attendanceTableHeader);
         biuldSmallTableRest(leastEngagedTable, statistics.leastEngaged, 'att');
     
         statistics.mostEngaged = attendance(allMembers, 'highest');
-        buildSmallTableHeader(attendanceTableHeader, mostEngagedTable);
+        buildSmallTableHeader(mostEngagedTable, attendanceTableHeader);
         biuldSmallTableRest(mostEngagedTable, statistics.mostEngaged, 'att');
     }
 
@@ -52,17 +50,19 @@ function statisticsPages(data){
     const mostLoyalTable = document.querySelector('#mostLoyal');
     if(leastLoyalTable != null){
         statistics.leastLoyal = loyalty(allMembers, 'least');
-        buildSmallTableHeader(loyaltyTableHeader, leastLoyalTable);
+        buildSmallTableHeader(leastLoyalTable, loyaltyTableHeader);
         biuldSmallTableRest(leastLoyalTable, statistics.leastLoyal, 'loyalty');
     
         statistics.mostLoyal = loyalty(allMembers, 'most');
-        buildSmallTableHeader(loyaltyTableHeader, mostLoyalTable);
+        buildSmallTableHeader(mostLoyalTable, loyaltyTableHeader);
         biuldSmallTableRest(mostLoyalTable, statistics.mostLoyal, 'loyalty');
     }
 
     // console.log(statistics);
 }
 
+//calculating statistics
+//
 function countPartyMembers(myArray){
     const demArray = [];
     const repArray = [];
@@ -117,8 +117,10 @@ function countPartyVotes(currentMember){
     return Math.round((currentMember.total_votes * currentMember.votes_with_party_pct)/100);
 }
 
+//build new tables
 //build header
-function buildSmallTableHeader(htmlElement, headerCellsArray){    
+function buildSmallTableHeader(htmlElement, headerCellsArray){
+    const newTHead = document.createElement('thead');    
     const newRow = document.createElement('tr');
 
     headerCellsArray.forEach(headerCell => {
@@ -127,8 +129,10 @@ function buildSmallTableHeader(htmlElement, headerCellsArray){
         newRow.append(newTH);
     });
     
+    newRow.classList.add('text-center');
     newRow.firstChild.classList.add('text-left');
-    htmlElement.append(newRow);
+    newTHead.append(newRow);
+    htmlElement.append(newTHead);
 }
 
 //biuld rest of the table
@@ -150,9 +154,9 @@ function buildSmallNewRow(currentMember, tableType) {
 
     //array with content for certain fields for current member    
     if(tableType === 'loyalty'){
-        fieldsContentArray = [nameFieldContent, votesWithPartyContent, currentMember.votes_with_party_pct];
+        fieldsContentArray = [nameFieldContent, votesWithPartyContent, currentMember.votes_with_party_pct.toFixed(2)];
     } else if(tableType === 'att'){
-        fieldsContentArray = [nameFieldContent, currentMember.missed_votes, currentMember.missed_votes_pct];
+        fieldsContentArray = [nameFieldContent, currentMember.missed_votes, currentMember.missed_votes_pct.toFixed(2)];
     } else if(tableType === 'glance'){
         if(currentMember === 'Democrats'){
             fieldsContentArray = [currentMember, statistics.noOfDem, statistics.votesWPartDem];
