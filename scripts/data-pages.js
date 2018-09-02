@@ -16,7 +16,9 @@ onload = (function(){
     // })
     .then (response => response.json())
     .then ((jsonData) => {
-        data = jsonData.results[0].members;            
+        data = jsonData.results[0].members;
+        document.querySelector('#loader').style.display =  'none';          
+        document.querySelector('#wholeContent').style.display = 'block';          
         (document.title == 'Senate' || document.title == 'House') ? dataPages(data) : statisticsPages(data);
     });
 });
@@ -79,7 +81,7 @@ function buildNewRow(currentMember) {
     const nameFieldContent = createNameCellContent(currentMember);
     
     //array with content for certain fields for current member
-    let fieldsContentArray = [nameFieldContent, currentMember.party, currentMember.state, currentMember.seniority, currentMember.votes_with_party_pct];
+    let fieldsContentArray = [nameFieldContent, currentMember.party, currentMember.state, currentMember.seniority, currentMember.votes_with_party_pct.toFixed(2)];
 
     //add new row
     const newRow = document.createElement("tr");

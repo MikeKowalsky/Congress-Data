@@ -21,119 +21,126 @@
 </head>
 <body>
 
-    <header>
-        <div class="container d-flex align-items-center justify-content-between">
-            <img class="my-logo" src="assets/tgif_logo.jpg" alt="company's logo">
-            <h2 class="text-right font-weight-bold">Transparent Government in Fact</h2>
-        </div>
-        <nav class="navbar navbar-expand-sm navbar-dark bg-warning">
-            <div class="container">
-
-                <div class="navbar-brand font-weight-bold my-brand-text">TGiF</div>
-                
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+    <div class="loader" id="loader">Loading...</div>
     
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item"><a class="nav-link text-dark" href="home.html">Home</a></li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Senate</a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="senate-data.html">Basic data</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="senate-attendance.html">Attendance</a>
-                                <a class="dropdown-item" href="senate-loyalty.html">Loyalty</a>
-                            </div>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">House</a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="house-data.html">Basic data</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="house-attendance.html">Attendance</a>
-                                <a class="dropdown-item" href="house-loyalty.html">Loyalty</a>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
+    <div id="wholeContent">
+
+        <header>
+            <div class="container d-flex align-items-center justify-content-between">
+                <img class="my-logo" src="assets/tgif_logo.jpg" alt="company's logo">
+                <h2 class="text-right font-weight-bold">Transparent Government in Fact</h2>
             </div>
-        </nav>
-    </header>
-
-    <section class="container my-4 my-separator">
-        <h4>Senators</h4>
-        <p class="text-justify">First convened in 1789, the composition and powers of the Senate are established in Article One of the U.S. Constitution. Each state is represented by two senators, regardless of population, who serve staggered six-year terms. The Senate has several exclusive powers not granted to the House, including consenting to treaties as a precondition to their ratification and consenting to or confirming appointments of Cabinet secretaries, federal judges, other federal executive officials, military officers, regulatory officials, ambassadors, and other federal uniformed officers, as well as trial of federal officials impeached by the House.</p>
-    </section>
-
-    <section>
-        <div class="container my-4">
-            <form>
-                <div class="form-row">
-                    <div class="form-group col-sm-12 col-md-6">
-                        <div class="d-flex align-items-center mb-1">
-                            <i class="material-icons pr-2">flag</i>
-                            <span class="font-weight-bold">Filter by Party:</span>
-                        </div>
-                        <div class="form-check ml-4">
-                            <input class="form-check-input" type="checkbox" name="checkboxes" value="R" id="chckR">
-                            <label class="form-check-label px-2" for="chckR">Republican</label>
-                        </div>
-                        <div class="form-check ml-4">
-                            <input class="form-check-input" type="checkbox" name="checkboxes" value="D" id="chckD">
-                            <label class="form-check-label px-2" for="chckD">Democrat</label>
-                        </div>
-                        <div class="form-check ml-4">
-                            <input class="form-check-input" type="checkbox" name="checkboxes" value="I" id="chckI">
-                            <label class="form-check-label px-2" for="chckI">Independent</label>
-                        </div>      
+            <nav class="navbar navbar-expand-sm navbar-dark bg-warning">
+                <div class="container">
+    
+                    <div class="navbar-brand font-weight-bold my-brand-text">TGiF</div>
+                    
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+        
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item"><a class="nav-link text-dark" href="home.html">Home</a></li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Senate</a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="senate-data.html">Basic data</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="senate-attendance.html">Attendance</a>
+                                    <a class="dropdown-item" href="senate-loyalty.html">Loyalty</a>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">House</a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="house-data.html">Basic data</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="house-attendance.html">Attendance</a>
+                                    <a class="dropdown-item" href="house-loyalty.html">Loyalty</a>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
-                    <div class="form-group col-sm-12 col-md-6">
+                </div>
+            </nav>
+        </header>
+            
+        <section class="container my-4 my-separator">
+            <h4>Senators</h4>
+            <p class="text-justify">First convened in 1789, the composition and powers of the Senate are established in Article One of the U.S. Constitution. Each state is represented by two senators, regardless of population, who serve staggered six-year terms. The Senate has several exclusive powers not granted to the House, including consenting to treaties as a precondition to their ratification and consenting to or confirming appointments of Cabinet secretaries, federal judges, other federal executive officials, military officers, regulatory officials, ambassadors, and other federal uniformed officers, as well as trial of federal officials impeached by the House.</p>
+        </section>
+            
+        <section>
+            <div class="container my-4">
+                <form>
+                    <div class="form-row">
+                        <div class="form-group col-sm-12 col-md-6">
                             <div class="d-flex align-items-center mb-1">
-                                <i class="material-icons pr-2">explore</i>
-                                <label class="mb-0 font-weight-bold" for="stateSelect">Filter by State:</label>
+                                <i class="material-icons pr-2">flag</i>
+                                <span class="font-weight-bold">Filter by Party:</span>
                             </div>
-                                <select multiple class="form-control" id="stateSelect">
-                                <option value="all" selected>Show all states</option>
-                            </select>
+                            <div class="form-check ml-4">
+                                <input class="form-check-input" type="checkbox" name="checkboxes" value="R" id="chckR">
+                                <label class="form-check-label px-2" for="chckR">Republican</label>
+                            </div>
+                            <div class="form-check ml-4">
+                                <input class="form-check-input" type="checkbox" name="checkboxes" value="D" id="chckD">
+                                <label class="form-check-label px-2" for="chckD">Democrat</label>
+                            </div>
+                            <div class="form-check ml-4">
+                                <input class="form-check-input" type="checkbox" name="checkboxes" value="I" id="chckI">
+                                <label class="form-check-label px-2" for="chckI">Independent</label>
+                            </div>      
+                        </div>
+                        <div class="form-group col-sm-12 col-md-6">
+                                <div class="d-flex align-items-center mb-1">
+                                    <i class="material-icons pr-2">explore</i>
+                                    <label class="mb-0 font-weight-bold" for="stateSelect">Filter by State:</label>
+                                </div>
+                                    <select multiple class="form-control" id="stateSelect">
+                                    <option value="all" selected>Show all states</option>
+                                </select>
+                        </div>
+                    </div>
+                </form>
+    
+                <div class="table-responsive">
+                    <table id="table-data" class="table table-sm table-bordered table-hover mb-4">
+                        <thead class="bg-warning text-center" id="dataTHead"></thead>
+                        <tbody id="dataTBody"></tbody>
+                    </table>
+                </div>
+            </div>  
+        </section>
+            
+        <footer class="bg-warning">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12 col-md-4">
+                        <div class="py-3 d-flex justify-content-center align-items-center">
+                            <i class="material-icons pr-2">place</i>
+                            <span>900 Florida Ave NE, Washington</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-4">
+                        <div class="py-3 d-flex justify-content-center align-items-center">
+                            <i class="material-icons pr-2">copyright</i>
+                            <span>2018 TGiF | All Rights Reserved</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-4">
+                        <div class="py-3 d-flex justify-content-center align-items-center">
+                            <i class="material-icons pr-2">local_post_office</i>
+                            <a class="my-email" href="mailto:emailUs@please.com">emailUs@please.com</a>
+                        </div>
                     </div>
                 </div>
-            </form>
-
-            <div class="table-responsive">
-                <table id="table-data" class="table table-sm table-bordered table-hover mb-4">
-                    <thead class="bg-warning text-center" id="dataTHead"></thead>
-                    <tbody id="dataTBody"></tbody>
-                </table>
             </div>
-        </div>  
-    </section>
+        </footer>
+        
+    </div>
 
-    <footer class="bg-warning">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12 col-md-4">
-                    <div class="py-3 d-flex justify-content-center align-items-center">
-                        <i class="material-icons pr-2">place</i>
-                        <span>900 Florida Ave NE, Washington</span>
-                    </div>
-                </div>
-                <div class="col-sm-12 col-md-4">
-                    <div class="py-3 d-flex justify-content-center align-items-center">
-                        <i class="material-icons pr-2">copyright</i>
-                        <span>2018 TGiF | All Rights Reserved</span>
-                    </div>
-                </div>
-                <div class="col-sm-12 col-md-4">
-                    <div class="py-3 d-flex justify-content-center align-items-center">
-                        <i class="material-icons pr-2">local_post_office</i>
-                        <a class="my-email" href="mailto:emailUs@please.com">emailUs@please.com</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
 
     <script src="scripts/data-pages.js"></script>
 
