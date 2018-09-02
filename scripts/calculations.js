@@ -1,9 +1,12 @@
-
-var statistics = {
+function statisticsPages(allMembers){
+    var statistics = {
         "noOfDem": 0,
         "noOfRep": 0,
         "noOfInd": 0,
         "noOfTotal": 0,
+        "demArray": [],
+        "repArray": [],
+        "indArray": [],
         "votesWPartDem": 0,
         "votesWPartRep": 0,
         "votesWPartInd": 0,
@@ -12,13 +15,19 @@ var statistics = {
         "mostLoyal" : [],
         "leastEngaged" : [],
         "mostEngaged" : []
-};
+    };
 
-function statisticsPages(allMembers){
-    const treeArrayObject = countPartyMembers(allMembers);
-    statistics.votesWPartDem = parseFloat(countAvgVotesWithParty(treeArrayObject.demArr));
-    statistics.votesWPartRep = parseFloat(countAvgVotesWithParty(treeArrayObject.repArr));
-    statistics.votesWPartInd = parseFloat(countAvgVotesWithParty(treeArrayObject.indArr));
+    statistics.repArray = createPartyArray(allMembers, "R");
+    statistics.demArray = createPartyArray(allMembers, "D");
+    statistics.indArray = createPartyArray(allMembers, "I");
+
+    statistics.noOfRep = statistics.repArray.length; 
+    statistics.noOfDem = statistics.demArray.length; 
+    statistics.noOfInd = statistics.indArray.length; 
+
+    statistics.votesWPartDem = parseFloat(countAvgVotesWithParty(statistics.demArray));
+    statistics.votesWPartRep = parseFloat(countAvgVotesWithParty(statistics.repArray));
+    statistics.votesWPartInd = parseFloat(countAvgVotesWithParty(statistics.indArray));
     statistics.votesWPartTotal = parseFloat(countAvgVotesWithParty(allMembers));
 
     const glanceTableHeader = ['Party', 'No. of Reps', '% Voted w/ Party'];
@@ -29,7 +38,7 @@ function statisticsPages(allMembers){
     const glanceTable = document.querySelector('#glance');
     const glanceArray = ['Democrats', 'Republicans', 'Independents', 'Total'];
     buildSmallTableHeader(glanceTable, glanceTableHeader);
-    biuldSmallTableRest(glanceTable, glanceArray, 'glance');
+    biuldSmallTableRest(glanceTable, glanceArray, 'glance', statistics);
     document.querySelector('#glance tbody').lastChild.classList.add('font-weight-bold')
 
     //attendance
@@ -58,31 +67,14 @@ function statisticsPages(allMembers){
         biuldSmallTableRest(mostLoyalTable, statistics.mostLoyal, 'loyalty');
     }
 
-    // console.log(statistics);
+    console.log(statistics);
 }
 
 //calculating statistics
 //
-function countPartyMembers(myArray){
-    const demArray = [];
-    const repArray = [];
-    const indArray = [];
 
-    myArray.forEach(member => {
-        if(member.party === 'D'){
-            demArray.push(member);
-        } else if (member.party === 'R'){
-            repArray.push(member);
-        } else {
-            indArray.push(member);
-        }
-    });
-
-    statistics.noOfDem = demArray.length;
-    statistics.noOfRep = repArray.length;
-    statistics.noOfInd = indArray.length;
-    statistics.noOfTotal = myArray.length;
-    return {demArr:demArray, repArr:repArray, indArr:indArray};
+function createPartyArray(allMembers, partySign){
+    return allMembers.filter(member => member.party === partySign);
 }
 
 function countAvgVotesWithParty(myArray){
@@ -136,17 +128,17 @@ function buildSmallTableHeader(htmlElement, headerCellsArray){
 }
 
 //biuld rest of the table
-function biuldSmallTableRest(myTable, myArray, tableType){
+function biuldSmallTableRest(myTable, myArray, tableType, statistics){
     const newTBody = document.createElement("tbody");
     myArray.forEach(element => {
-            const newRow = buildSmallNewRow(element, tableType);
+            const newRow = buildSmallNewRow(element, tableType, statistics);
             newTBody.append(newRow);
         });
     myTable.append(newTBody);
 }
 
 //biuld one row
-function buildSmallNewRow(currentMember, tableType) {
+function buildSmallNewRow(currentMember, tableType, statistics) {
 
     const nameFieldContent = createNameCellContent(currentMember);
     const votesWithPartyContent = countPartyVotes(currentMember);
@@ -163,7 +155,7 @@ function buildSmallNewRow(currentMember, tableType) {
         } else if(currentMember === 'Republicans'){
             fieldsContentArray = [currentMember, statistics.noOfRep, statistics.votesWPartRep];
         } else if(currentMember === 'Independents'){
-            fieldsContentArray = [currentMember, statistics.noOfInd, statistics.votesWPartInd];
+            fieldsContentArray = statistics.noOfInd == 0 ? [currentMember, '-', '-'] : [currentMember, statistics.noOfInd, statistics.votesWPartInd];
         } else {
             fieldsContentArray = [currentMember, statistics.noOfTotal, statistics.votesWPartTotal];
         }
