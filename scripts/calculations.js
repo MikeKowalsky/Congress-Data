@@ -121,7 +121,7 @@ function buildSmallTableHeader(htmlElement, headerCellsArray){
         newRow.append(newTH);
     });
     
-    newRow.classList.add('text-center');
+    newRow.classList.add('text-center', 'bg-warning');
     newRow.firstChild.classList.add('text-left');
     newTHead.append(newRow);
     htmlElement.append(newTHead);
