@@ -3,17 +3,17 @@
 onload = (function(){
     
     let url = '';
-    (document.title.includes('Senate')) ? url = 'https://api.myjson.com/bins/10be9l' : url = 'https://api.myjson.com/bins/1fzbyp';
-    // (document.title.includes('Senate')) ? 
-    //     url = 'https://api.propublica.org/congress/v1/113/senate/members.json' : 
-    //     url = 'https://api.propublica.org/congress/v1/113/house/members.json';
+    // (document.title.includes('Senate')) ? url = 'https://api.myjson.com/bins/10be9l' : url = 'https://api.myjson.com/bins/1fzbyp';
+    (document.title.includes('Senate')) ? 
+        url = 'https://api.propublica.org/congress/v1/113/senate/members.json' : 
+        url = 'https://api.propublica.org/congress/v1/113/house/members.json';
 
-    fetch(url)
-    // fetch(url, {
-    // 	headers: new Headers({
-    //     'X-API-Key': 'usOMuQb7H1gDEgsMArhgUa5Pefz1BxSbxrdMK4LJ'
-    //     })
-    // })
+    // fetch(url)
+    fetch(url, {
+    	headers: new Headers({
+        'X-API-Key': 'usOMuQb7H1gDEgsMArhgUa5Pefz1BxSbxrdMK4LJ'
+        })
+    })
     .then (response => response.json())
     .then ((jsonData) => {
         data = jsonData.results[0].members;
