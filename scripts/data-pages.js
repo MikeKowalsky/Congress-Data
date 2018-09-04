@@ -36,10 +36,6 @@ function dataPages(allMembers){
     const tableHeaderCellsArray = ["Name", "Party", "State", "Seniority", "% Votes w/ Party"];
     buildTableHeader(tblHead, tableHeaderCellsArray);
     buildTableRest(tblBody, filterMembers(allMembers));
-
-    // tbl.DataTable({
-    //     "order": [[ 3, "desc" ]]
-    // });
 }
 
 //activate eventlisteners
@@ -136,4 +132,14 @@ function createOptionElements(allMembers, mySelect) {
         newOption.innerHTML = state;
         mySelect.append(newOption);
     });
+}
+
+//search option
+function mySearch(id){
+
+    const inputValue = document.querySelector('#myInput').value.toUpperCase();
+    const currentTable = document.querySelector(id);
+    const allTr = Array.from(currentTable.querySelectorAll('tr'));
+
+    allTr.forEach(tr => tr.firstChild.innerHTML.toUpperCase().indexOf(inputValue) > -1 ? tr.style.display = "" : tr.style.display = "none")
 }

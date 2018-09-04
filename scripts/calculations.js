@@ -66,13 +66,10 @@ function statisticsPages(allMembers){
         buildSmallTableHeader(mostLoyalTable, loyaltyTableHeader);
         biuldSmallTableRest(mostLoyalTable, statistics.mostLoyal, 'loyalty');
     }
-
-    console.log(statistics);
 }
 
 //calculating statistics
 //
-
 function createPartyArray(allMembers, partySign){
     return allMembers.filter(member => member.party === partySign);
 }
