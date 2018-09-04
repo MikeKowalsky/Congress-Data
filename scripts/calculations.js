@@ -23,7 +23,8 @@ function statisticsPages(allMembers){
 
     statistics.noOfRep = statistics.repArray.length; 
     statistics.noOfDem = statistics.demArray.length; 
-    statistics.noOfInd = statistics.indArray.length; 
+    statistics.noOfInd = statistics.indArray.length;
+    statistics.noOfTotal = allMembers.length;
 
     statistics.votesWPartDem = parseFloat(countAvgVotesWithParty(statistics.demArray));
     statistics.votesWPartRep = parseFloat(countAvgVotesWithParty(statistics.repArray));
